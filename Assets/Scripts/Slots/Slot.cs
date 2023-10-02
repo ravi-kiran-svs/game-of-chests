@@ -7,7 +7,7 @@ public class Slot : MonoBehaviour {
     private bool isFree = true;
     public bool IsFree { get { return isFree; } }
 
-    public void AddChest(GameObject chest) {
+    public void AddChest(ChestView chest) {
         chest.transform.SetParent(transform, false);
         isFree = false;
     }

@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class ChestService : MonoSingleton<ChestService> {
 
-    // change type to ChestView
-    [SerializeField] private GameObject ChestPrefab;
+    [SerializeField] private ChestView ChestPrefab;
 
     public void GenerateChest() {
         Slot slot = SlotService.Instance.GetFreeSlot();
@@ -15,7 +14,7 @@ public class ChestService : MonoSingleton<ChestService> {
             Debug.Log("NO MORE CHESTS!");
 
         } else {
-            GameObject chest = Instantiate(ChestPrefab, transform);
+            ChestView chest = Instantiate(ChestPrefab, transform);
             slot.AddChest(chest);
         }
     }
