@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class ChestView : MonoBehaviour {
 
+    // States - LOCKED , UNLOCKING , UNLOCKED
+
     [SerializeField] private int gemsToUnlock = 5;
     [SerializeField] private int gemsReward = 10;
 
@@ -13,25 +15,29 @@ public class ChestView : MonoBehaviour {
     [SerializeField] private GameObject unlockButton;
     [SerializeField] private GameObject openButton;
 
+    // LOCKED state
     public void OnChestUnlock() {
         ChestService.Instance.ShowUnlockChestDialog(0, 0, this);
     }
 
+    // to UNLOCKING state
     public void StartTimer() {
         // coroutine shit - in state machine
     }
 
+    // to UNLOCKED state
     public void UseGems() {
         CurrencyService.Instance.MinusGems(gemsToUnlock);
-
         Unlock();
     }
 
+    // during both LOCKED and UNLOCKING
     private void Unlock() {
         unlockButton.SetActive(false);
         openButton.SetActive(true);
     }
 
+    // UNLOCKED state
     public void OnChestOpen() {
         ChestService.Instance.ShowOpenChestDialog(0, this);
     }
