@@ -21,24 +21,22 @@ public class CurrencyService : MonoSingleton<CurrencyService> {
 
     public void AddCoins(int c) {
         coins += c;
-        // change ui thing also
         coinsText.text = coins.ToString();
     }
 
     public void AddGems(int g) {
         gems += g;
-        // change ui thing also
         gemsText.text = gems.ToString();
     }
 
     public void MinusCoins(int c) {
         coins -= c;
-        // change ui thing also
+        coinsText.text = coins.ToString();
     }
 
     public void MinusGems(int g) {
         gems -= g;
-        // change ui thing also
+        gemsText.text = gems.ToString();
     }
 
 }
