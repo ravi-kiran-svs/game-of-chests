@@ -10,18 +10,21 @@ public class ChestView : MonoBehaviour {
     [SerializeField] private GameObject unlockButton;
     [SerializeField] private GameObject openButton;
 
+    private void Update() {
+        controller.Update();
+    }
+
     public void OnChestUnlock() {
         controller.UnlockChest();
+    }
+
+    public void OnChestOpen() {
+        controller.OpenChest();
     }
 
     public void Unlock() {
         unlockButton.SetActive(false);
         openButton.SetActive(true);
-    }
-
-    // UNLOCKED state
-    public void OnChestOpen() {
-        controller.OpenChest();
     }
 
 }

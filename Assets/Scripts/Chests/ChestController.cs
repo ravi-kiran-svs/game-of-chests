@@ -6,48 +6,59 @@ using UnityEngine;
 public class ChestController {
 
     // part of model class
-    [SerializeField] private int gemsToUnlock = 5;
-    [SerializeField] private int gemsReward = 10;
+    [SerializeField] public int gemsToUnlock = 5;
+    [SerializeField] public int gemsReward = 10;
+
+    public event Action OnCollected;
 
     // public ChestModel chestModel;
     private ChestView chestView;
     public ChestView View { get { return chestView; } }
 
+    // States - LOCKED , UNLOCKING , UNLOCKED
+    public ChestState lockedState, unlockingState, unlockedState, collectedState;
+    private ChestState currentState;
+
     public ChestController(ChestView view) {
         // chestModel = model;
         chestView = view;
         view.controller = this;
+
+        //create all the states lol
+        lockedState = new LockedState(this);
+        //unlockingState = new UnlockingState(this);
+        unlockedState = new UnlockedState(this);
+        collectedState = new CollectedState(this);
+
+        ChangeState(lockedState);
     }
 
-    // States - LOCKED , UNLOCKING , UNLOCKED
+    public void Update() {
+        currentState.Update();
+    }
 
-    public event Action OnCollected;
+    public void ChangeState(ChestState newState) {
+        if (currentState != null) {
+            currentState.OnExit();
+        }
+        currentState = newState;
+        currentState.OnEnter();
+    }
 
-    // LOCKED state
     public void UnlockChest() {
-        ChestService.Instance.ShowUnlockChestDialog(0, 0, this);
+        if (currentState is LockedState) {
+            ((LockedState)currentState).UnlockChest();
+        }
     }
 
-    // to UNLOCKING state
-    public void StartTimer() {
-        // coroutine shit - in state machine
-    }
-
-    // to UNLOCKED state
-    public void UseGems() {
-        CurrencyService.Instance.MinusGems(gemsToUnlock);
-
-        // change state logic
-        chestView.Unlock();
-    }
-
-    // UNLOCKED state
     public void OpenChest() {
-        ChestService.Instance.ShowOpenChestDialog(0, this);
+        if (currentState is UnlockedState) {
+            ((UnlockedState)currentState).OpenChest();
+        }
     }
 
-    public void CollectGems() {
-        CurrencyService.Instance.AddGems(gemsReward);
+    public void CloseChest() {
+        Debug.Log("CLOSING");
         OnCollected?.Invoke();
         GameObject.Destroy(chestView.gameObject);
     }
