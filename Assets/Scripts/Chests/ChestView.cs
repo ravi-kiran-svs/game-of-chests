@@ -5,15 +5,39 @@ using UnityEngine;
 
 public class ChestView : MonoBehaviour {
 
+    [SerializeField] private int gemsToUnlock = 5;
+    [SerializeField] private int gemsReward = 10;
+
     public event Action OnCollected;
 
-    public void OnChestUnlock() {
-        CurrencyService.Instance.AddCoins(100);
+    [SerializeField] private GameObject unlockButton;
+    [SerializeField] private GameObject openButton;
 
-        CollectChest();
+    public void OnChestUnlock() {
+        ChestService.Instance.ShowUnlockChestDialog(0, 0, this);
     }
 
-    private void CollectChest() {
+    public void StartTimer() {
+        // coroutine shit - in state machine
+    }
+
+    public void UseGems() {
+        CurrencyService.Instance.MinusGems(gemsToUnlock);
+
+        Unlock();
+    }
+
+    private void Unlock() {
+        unlockButton.SetActive(false);
+        openButton.SetActive(true);
+    }
+
+    public void OnChestOpen() {
+        ChestService.Instance.ShowOpenChestDialog(0, this);
+    }
+
+    public void CollectGems() {
+        CurrencyService.Instance.AddGems(gemsReward);
         OnCollected?.Invoke();
         Destroy(gameObject);
     }

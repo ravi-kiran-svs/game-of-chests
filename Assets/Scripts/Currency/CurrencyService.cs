@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -13,6 +14,11 @@ public class CurrencyService : MonoSingleton<CurrencyService> {
 
     [SerializeField] private TextMeshProUGUI coinsText;
     [SerializeField] private TextMeshProUGUI gemsText;
+
+    private void Start() {
+        coins = Convert.ToInt32(coinsText.text);
+        gems = Convert.ToInt32(gemsText.text);
+    }
 
     public void AddGemsAndCoins(int g, int c) {
         AddCoins(c);
