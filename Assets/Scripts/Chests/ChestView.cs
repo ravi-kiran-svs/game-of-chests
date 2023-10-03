@@ -5,16 +5,16 @@ using UnityEngine;
 
 public class ChestView : MonoBehaviour {
 
-    public event Action OnClose;
+    public event Action OnCollected;
 
-    public void OnChestOpen() {
+    public void OnChestUnlock() {
         CurrencyService.Instance.AddCoins(100);
 
-        CloseChest();
+        CollectChest();
     }
 
-    private void CloseChest() {
-        OnClose?.Invoke();
+    private void CollectChest() {
+        OnCollected?.Invoke();
         Destroy(gameObject);
     }
 
