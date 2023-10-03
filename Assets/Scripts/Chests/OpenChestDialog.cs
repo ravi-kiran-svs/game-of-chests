@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class OpenChestDialog : MonoBehaviour {
 
-    ChestView currentChest;
+    ChestController currentChest;
 
-    public void Open(int gems, ChestView chest) {
+    public void Open(int gems, ChestController chest) {
         currentChest = chest;
         gameObject.SetActive(true);
     }

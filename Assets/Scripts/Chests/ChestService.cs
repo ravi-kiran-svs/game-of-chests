@@ -17,16 +17,17 @@ public class ChestService : MonoSingleton<ChestService> {
             slotsFullDialog.SetActive(true);
 
         } else {
-            ChestView chest = Instantiate(ChestPrefab, transform);
+            ChestView chestView = Instantiate(ChestPrefab, transform);
+            ChestController chest = new ChestController(chestView);
             slot.AddChest(chest);
         }
     }
 
-    public void ShowUnlockChestDialog(int time, int gems, ChestView chest) {
+    public void ShowUnlockChestDialog(int time, int gems, ChestController chest) {
         unlockChestDialog.Open(time, gems, chest);
     }
 
-    public void ShowOpenChestDialog(int gems, ChestView chest) {
+    public void ShowOpenChestDialog(int gems, ChestController chest) {
         openChestDialog.Open(gems, chest);
     }
 

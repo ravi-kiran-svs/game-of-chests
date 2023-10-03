@@ -7,9 +7,9 @@ public class Slot : MonoBehaviour {
     private bool isFree = true;
     public bool IsFree { get { return isFree; } }
 
-    public void AddChest(ChestView chest) {
+    public void AddChest(ChestController chest) {
         chest.OnCollected += OnChestCollected;
-        chest.transform.SetParent(transform, false);
+        chest.View.transform.SetParent(transform, false);
         isFree = false;
     }
 
