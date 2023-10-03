@@ -6,12 +6,13 @@ public class ChestService : MonoSingleton<ChestService> {
 
     [SerializeField] private ChestView ChestPrefab;
 
+    [SerializeField] private GameObject slotsFullDialog;
+
     public void GenerateChest() {
         Slot slot = SlotService.Instance.GetFreeSlot();
 
         if (slot == null) {
-            // dialog box lol
-            Debug.Log("NO MORE CHESTS!");
+            slotsFullDialog.SetActive(true);
 
         } else {
             ChestView chest = Instantiate(ChestPrefab, transform);
