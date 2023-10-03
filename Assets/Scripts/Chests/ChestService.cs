@@ -23,8 +23,8 @@ public class ChestService : MonoSingleton<ChestService> {
         }
     }
 
-    public void ShowUnlockChestDialog(int time, int gems, LockedState chest) {
-        unlockChestDialog.Open(time, gems, chest);
+    public void ShowUnlockChestDialog(int time, int gems, bool showGems, LockedState chest) {
+        unlockChestDialog.Open(time, gems, showGems, chest);
     }
 
     public void ShowOpenChestDialog(int gems, UnlockedState chest) {

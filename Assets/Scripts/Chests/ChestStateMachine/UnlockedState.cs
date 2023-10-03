@@ -14,7 +14,7 @@ public class UnlockedState : ChestState {
     }
 
     public void OpenChest() {
-        ChestService.Instance.ShowOpenChestDialog(0, this);
+        ChestService.Instance.ShowOpenChestDialog(controller.gemsReward, this);
     }
 
     public void CollectGems() {
