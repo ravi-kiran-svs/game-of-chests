@@ -6,7 +6,6 @@ public class LockedState : ChestState {
     }
 
     public override void OnExit() {
-        controller.View.Unlock();
     }
 
     public override void Update() {
@@ -18,13 +17,15 @@ public class LockedState : ChestState {
 
     // to UNLOCKING state
     public void StartTimer() {
-        // coroutine shit - in state machine
+        controller.ChangeState(controller.unlockingState);
+        controller.View.Unlocking();
     }
 
     // to UNLOCKED state
     public void UseGems() {
         CurrencyService.Instance.MinusGems(controller.gemsToUnlock);
         controller.ChangeState(controller.unlockedState);
+        controller.View.UnlockDirect();
     }
 
 }

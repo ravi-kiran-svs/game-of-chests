@@ -8,6 +8,7 @@ public class ChestController {
     // part of model class
     [SerializeField] public int gemsToUnlock = 5;
     [SerializeField] public int gemsReward = 10;
+    [SerializeField] public int timeToWait = 5;
 
     public event Action OnCollected;
 
@@ -15,18 +16,15 @@ public class ChestController {
     private ChestView chestView;
     public ChestView View { get { return chestView; } }
 
-    // States - LOCKED , UNLOCKING , UNLOCKED
     public ChestState lockedState, unlockingState, unlockedState, collectedState;
     private ChestState currentState;
 
     public ChestController(ChestView view) {
-        // chestModel = model;
         chestView = view;
         view.controller = this;
 
-        //create all the states lol
         lockedState = new LockedState(this);
-        //unlockingState = new UnlockingState(this);
+        unlockingState = new UnlockingState(this);
         unlockedState = new UnlockedState(this);
         collectedState = new CollectedState(this);
 
@@ -57,8 +55,13 @@ public class ChestController {
         }
     }
 
+    public void OpenChestNow() {
+        if (currentState is UnlockingState) {
+            ((UnlockingState)currentState).OpenChestNow();
+        }
+    }
+
     public void CloseChest() {
-        Debug.Log("CLOSING");
         OnCollected?.Invoke();
         GameObject.Destroy(chestView.gameObject);
     }
