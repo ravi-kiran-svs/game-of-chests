@@ -8,7 +8,7 @@ public class ChestController {
     // part of model class
     [SerializeField] public int gemsToUnlock = 5;
     [SerializeField] public int gemsReward = 10;
-    [SerializeField] public int timeToWait = 5;
+    [SerializeField] public int timeToWait = 20;
 
     public event Action OnCollected;
 

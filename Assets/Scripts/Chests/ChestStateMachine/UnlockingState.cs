@@ -25,14 +25,22 @@ public class UnlockingState : ChestState {
         float tLeft = controller.timeToWait - tPassed;
         int tInt = (int)(tLeft + 0.5);
 
-        controller.View.UpdateUnlockingTexts(tInt, 0, true);
+        float gemsPerSec = (float)controller.gemsToUnlock / controller.timeToWait;
+        float gemsToUnlock = tLeft * gemsPerSec;
+        int gemsInt = (int)(gemsToUnlock + 1);
+
+        controller.View.UpdateUnlockingTexts(tInt, gemsInt, CurrencyService.Instance.Gems >= gemsInt);
     }
 
     public void OpenChestNow() {
         controller.View.StopCoroutine(timerRun);
 
-        // not gemsToUnlock - calculated minus timer thing
-        //CurrencyService.Instance.MinusGems(controller.gemsToUnlock);
+        float tPassed = Time.time - tStart;
+        float tLeft = controller.timeToWait - tPassed;
+        float gemsPerSec = (float)controller.gemsToUnlock / controller.timeToWait;
+        float gemsToUnlock = tLeft * gemsPerSec;
+        int gemsInt = (int)(gemsToUnlock + 1);
+        CurrencyService.Instance.MinusGems(gemsInt);
 
         controller.ChangeState(controller.unlockedState);
         controller.View.Unlock();
