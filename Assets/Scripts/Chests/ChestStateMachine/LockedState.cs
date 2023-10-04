@@ -12,8 +12,9 @@ public class LockedState : ChestState {
     }
 
     public void UnlockChest() {
+        bool showTimer = !ChestService.Instance.IsAnyTimerRunning();
         bool showGems = CurrencyService.Instance.Gems >= controller.gemsToUnlock;
-        ChestService.Instance.ShowUnlockChestDialog(controller.timeToWait, controller.gemsToUnlock, showGems, this);
+        ChestService.Instance.ShowUnlockChestDialog(controller.timeToWait, controller.gemsToUnlock, showTimer, showGems, this);
     }
 
     // to UNLOCKING state

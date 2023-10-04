@@ -10,7 +10,7 @@ public class ChestController {
     [SerializeField] public int gemsReward = 10;
     [SerializeField] public int timeToWait = 20;
 
-    public event Action OnCollected;
+    public event Action<ChestController> OnCollected;
 
     // public ChestModel chestModel;
     private ChestView chestView;
@@ -18,6 +18,7 @@ public class ChestController {
 
     public ChestState lockedState, unlockingState, unlockedState, collectedState;
     private ChestState currentState;
+    public ChestState CurrentState { get { return currentState; } }
 
     public ChestController(ChestView view) {
         chestView = view;
@@ -62,7 +63,7 @@ public class ChestController {
     }
 
     public void CloseChest() {
-        OnCollected?.Invoke();
+        OnCollected?.Invoke(this);
         GameObject.Destroy(chestView.gameObject);
     }
 }

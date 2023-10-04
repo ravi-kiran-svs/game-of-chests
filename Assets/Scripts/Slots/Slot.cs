@@ -8,12 +8,12 @@ public class Slot : MonoBehaviour {
     public bool IsFree { get { return isFree; } }
 
     public void AddChest(ChestController chest) {
-        chest.OnCollected += OnChestCollected;
+        chest.OnCollected += OnChestClosed;
         chest.View.transform.SetParent(transform, false);
         isFree = false;
     }
 
-    private void OnChestCollected() {
+    private void OnChestClosed(ChestController chest) {
         isFree = true;
     }
 
