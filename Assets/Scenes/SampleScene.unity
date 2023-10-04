@@ -2517,6 +2517,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 73996ec612379774cbe5051bdd7ebcd0, type: 2}
   - {fileID: 11400000, guid: 8574c5cd04f7b3c47a433637c008dae1, type: 2}
   - {fileID: 11400000, guid: 077f6bc5a29582945b8b24783def13f0, type: 2}
+  probWeights: 08000000040000000200000001000000
   slotsFullDialog: {fileID: 1352691989}
   unlockChestDialog: {fileID: 1902091954}
   openChestDialog: {fileID: 525410918}

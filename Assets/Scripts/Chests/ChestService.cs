@@ -6,6 +6,7 @@ public class ChestService : MonoSingleton<ChestService> {
 
     [SerializeField] private ChestView[] ChestPrefabs;
     [SerializeField] private ChestModel[] ChestModels;
+    [SerializeField] private int[] probWeights;
 
     [SerializeField] private GameObject slotsFullDialog;
     [SerializeField] private UnlockChestDialog unlockChestDialog;
@@ -20,7 +21,7 @@ public class ChestService : MonoSingleton<ChestService> {
             slotsFullDialog.SetActive(true);
 
         } else {
-            int type = Random.Range(0, 4);
+            int type = WeightedProb.getWeightedProb(probWeights);
             ChestView chestView = Instantiate(ChestPrefabs[type], transform);
             ChestModel chestModel = ChestModels[type];
             ChestController chest = new ChestController(chestModel, chestView);
