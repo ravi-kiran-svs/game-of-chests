@@ -22,10 +22,10 @@ public class UnlockingState : ChestState {
 
     public override void Update() {
         float tPassed = Time.time - tStart;
-        float tLeft = controller.timeToWait - tPassed;
+        float tLeft = controller.Model.timeToUnlock - tPassed;
         int tInt = (int)(tLeft + 0.5);
 
-        float gemsPerSec = (float)controller.gemsToUnlock / controller.timeToWait;
+        float gemsPerSec = (float)controller.Model.gemsToUnlock / controller.Model.timeToUnlock;
         float gemsToUnlock = tLeft * gemsPerSec;
         int gemsInt = (int)(gemsToUnlock + 1);
 
@@ -36,8 +36,8 @@ public class UnlockingState : ChestState {
         controller.View.StopCoroutine(timerRun);
 
         float tPassed = Time.time - tStart;
-        float tLeft = controller.timeToWait - tPassed;
-        float gemsPerSec = (float)controller.gemsToUnlock / controller.timeToWait;
+        float tLeft = controller.Model.timeToUnlock - tPassed;
+        float gemsPerSec = (float)controller.Model.gemsToUnlock / controller.Model.timeToUnlock;
         float gemsToUnlock = tLeft * gemsPerSec;
         int gemsInt = (int)(gemsToUnlock + 1);
         CurrencyService.Instance.MinusGems(gemsInt);
@@ -47,7 +47,7 @@ public class UnlockingState : ChestState {
     }
 
     public IEnumerator StartTimer() {
-        yield return new WaitForSeconds(controller.timeToWait);
+        yield return new WaitForSeconds(controller.Model.timeToUnlock);
         OnTimerFinish();
     }
 

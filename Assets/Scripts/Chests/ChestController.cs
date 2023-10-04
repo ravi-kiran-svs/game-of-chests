@@ -5,24 +5,29 @@ using UnityEngine;
 
 public class ChestController {
 
-    // part of model class
-    [SerializeField] public int gemsToUnlock = 5;
-    [SerializeField] public int gemsReward = 10;
-    [SerializeField] public int timeToWait = 20;
-
     public event Action<ChestController> OnCollected;
 
-    // public ChestModel chestModel;
+    private ChestModel chestModel;
+    public ChestModel Model { get { return chestModel; } }
     private ChestView chestView;
     public ChestView View { get { return chestView; } }
+
+    private int gemsReward;
+    public int GemsReward { get { return gemsReward; } }
+    private int coinReward;
+    public int CoinReward { get { return coinReward; } }
 
     public ChestState lockedState, unlockingState, unlockedState, collectedState;
     private ChestState currentState;
     public ChestState CurrentState { get { return currentState; } }
 
-    public ChestController(ChestView view) {
+    public ChestController(ChestModel model, ChestView view) {
+        chestModel = model;
         chestView = view;
         view.controller = this;
+
+        gemsReward = model.gemsRewardRange.Value;
+        coinReward = model.coinRewardRange.Value;
 
         lockedState = new LockedState(this);
         unlockingState = new UnlockingState(this);

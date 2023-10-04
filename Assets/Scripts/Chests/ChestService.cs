@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class ChestService : MonoSingleton<ChestService> {
 
-    [SerializeField] private ChestView[] ChestPrefab;
+    [SerializeField] private ChestView[] ChestPrefabs;
+    [SerializeField] private ChestModel[] ChestModels;
 
     [SerializeField] private GameObject slotsFullDialog;
     [SerializeField] private UnlockChestDialog unlockChestDialog;
@@ -19,8 +20,10 @@ public class ChestService : MonoSingleton<ChestService> {
             slotsFullDialog.SetActive(true);
 
         } else {
-            ChestView chestView = Instantiate(ChestPrefab[Random.Range(0, 4)], transform);
-            ChestController chest = new ChestController(chestView);
+            int type = Random.Range(0, 4);
+            ChestView chestView = Instantiate(ChestPrefabs[type], transform);
+            ChestModel chestModel = ChestModels[type];
+            ChestController chest = new ChestController(chestModel, chestView);
             slot.AddChest(chest);
 
             controllers.Add(chest);

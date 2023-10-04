@@ -14,11 +14,12 @@ public class UnlockedState : ChestState {
     }
 
     public void OpenChest() {
-        ChestService.Instance.ShowOpenChestDialog(controller.gemsReward, this);
+        ChestService.Instance.ShowOpenChestDialog(controller.GemsReward, this);
     }
 
     public void CollectGems() {
-        CurrencyService.Instance.AddGems(controller.gemsReward);
+        CurrencyService.Instance.AddGems(controller.GemsReward);
+        CurrencyService.Instance.AddCoins(controller.CoinReward);
         controller.ChangeState(controller.collectedState);
     }
 }

@@ -2507,11 +2507,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c092c0ed8a596d4c8b4275c1253b39e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ChestPrefab:
+  ChestPrefabs:
   - {fileID: 6103469427397788248, guid: b6896ff32ee336e4cbaeed8b83835075, type: 3}
   - {fileID: 1687121628538373380, guid: 67b212f89c3456c47b4f0839b24ca4db, type: 3}
   - {fileID: 4132943537717450151, guid: f67d617a48cb16f49871d7f3eba7f2a7, type: 3}
   - {fileID: 3832155628569538368, guid: a40f48f9581b2474eae37dda3b57f309, type: 3}
+  ChestModels: []
   slotsFullDialog: {fileID: 1352691989}
   unlockChestDialog: {fileID: 1902091954}
   openChestDialog: {fileID: 525410918}
