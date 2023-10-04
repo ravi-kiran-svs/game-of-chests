@@ -36,8 +36,8 @@ public class ChestView : MonoBehaviour {
     // Unlocking
     public void UpdateUnlockingTexts(int time, int gems, bool showGems) {
         unlockingTimeText.text = time.ToString();
-        /*unlockingGemsText.text = gems.ToString();
-        unlockingGemsButton.interactable = showGems;*/
+        unlockingGemsText.text = gems.ToString();
+        unlockingGemsButton.interactable = showGems;
     }
 
     // Locked -> Unlocked
