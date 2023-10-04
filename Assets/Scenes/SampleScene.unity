@@ -2512,7 +2512,11 @@ MonoBehaviour:
   - {fileID: 1687121628538373380, guid: 67b212f89c3456c47b4f0839b24ca4db, type: 3}
   - {fileID: 4132943537717450151, guid: f67d617a48cb16f49871d7f3eba7f2a7, type: 3}
   - {fileID: 3832155628569538368, guid: a40f48f9581b2474eae37dda3b57f309, type: 3}
-  ChestModels: []
+  ChestModels:
+  - {fileID: 11400000, guid: 378edcaf744b62e4ba6b2d5fd4ec6906, type: 2}
+  - {fileID: 11400000, guid: 73996ec612379774cbe5051bdd7ebcd0, type: 2}
+  - {fileID: 11400000, guid: 8574c5cd04f7b3c47a433637c008dae1, type: 2}
+  - {fileID: 11400000, guid: 077f6bc5a29582945b8b24783def13f0, type: 2}
   slotsFullDialog: {fileID: 1352691989}
   unlockChestDialog: {fileID: 1902091954}
   openChestDialog: {fileID: 525410918}
