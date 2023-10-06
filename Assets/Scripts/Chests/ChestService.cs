@@ -12,6 +12,10 @@ public class ChestService : MonoSingleton<ChestService> {
     [SerializeField] private UnlockChestDialog unlockChestDialog;
     [SerializeField] private OpenChestDialog openChestDialog;
 
+    private ChestController activeChest;
+    private Queue<ChestController> queue = new Queue<ChestController>();
+    [SerializeField] private int maxQueueNum = 2;
+
     private List<ChestController> controllers = new List<ChestController>();
 
     public void GenerateChest() {
@@ -30,11 +34,13 @@ public class ChestService : MonoSingleton<ChestService> {
 
             controllers.Add(chest);
             chest.OnCollected += OnChestClosed;
+            chest.OnEnterState += OnChestEnteredState;
+            chest.OnExitState += OnChestExitState;
         }
     }
 
-    public void ShowUnlockChestDialog(int time, int gems, bool showTimer, bool showGems, LockedState chest) {
-        unlockChestDialog.Open(time, gems, showTimer, showGems, chest);
+    public void ShowUnlockChestDialog(int time, int gems, bool showTimer, bool showGems, bool showQueue, LockedState chest) {
+        unlockChestDialog.Open(time, gems, showTimer, showGems, showQueue, chest);
     }
 
     public void ShowOpenChestDialog(int gems, UnlockedState chest) {
@@ -48,6 +54,36 @@ public class ChestService : MonoSingleton<ChestService> {
             }
         }
         return false;
+    }
+
+    public bool IsQueueFull() {
+        return queue.Count >= maxQueueNum;
+    }
+
+    public void AddToQueue(ChestController chest) {
+        if (!IsQueueFull()) {
+            queue.Enqueue(chest);
+        }
+    }
+
+    private void OnActiveChestUnlockingComplete() {
+        if (queue.Count > 0) {
+            ChestController chest = queue.Dequeue();
+            ((QueuedState)chest.CurrentState).ForceUnlocking();
+        }
+    }
+
+    private void OnChestEnteredState(ChestController chest, ChestState state) {
+        if (state is UnlockingState) {
+            activeChest = chest;
+        }
+    }
+
+    private void OnChestExitState(ChestController chest, ChestState state) {
+        if (chest == activeChest && state is UnlockingState) {
+            activeChest = null;
+            OnActiveChestUnlockingComplete();
+        }
     }
 
     private void OnChestClosed(ChestController chest) {

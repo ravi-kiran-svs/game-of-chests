@@ -6,6 +6,8 @@ using UnityEngine;
 public class ChestController {
 
     public event Action<ChestController> OnCollected;
+    public event Action<ChestController, ChestState> OnEnterState;
+    public event Action<ChestController, ChestState> OnExitState;
 
     private ChestModel chestModel;
     private ChestView chestView;
@@ -15,7 +17,7 @@ public class ChestController {
     private int coinReward;
     public int CoinReward { get { return coinReward; } }
 
-    public ChestState lockedState, unlockingState, unlockedState, collectedState;
+    public ChestState lockedState, unlockingState, unlockedState, collectedState, queuedState;
     private ChestState currentState;
     public ChestState CurrentState { get { return currentState; } }
 
@@ -31,6 +33,7 @@ public class ChestController {
         unlockingState = new UnlockingState(this, model, view);
         unlockedState = new UnlockedState(this, model, view);
         collectedState = new CollectedState(this, model, view);
+        queuedState = new QueuedState(this, model, view);
 
         ChangeState(lockedState);
     }
@@ -42,9 +45,12 @@ public class ChestController {
     public void ChangeState(ChestState newState) {
         if (currentState != null) {
             currentState.OnExit();
+            OnExitState?.Invoke(this, currentState);
         }
+
         currentState = newState;
         currentState.OnEnter();
+        OnEnterState?.Invoke(this, currentState);
     }
 
     public void UnlockChest() {

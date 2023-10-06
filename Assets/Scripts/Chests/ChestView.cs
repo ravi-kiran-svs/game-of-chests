@@ -12,6 +12,7 @@ public class ChestView : MonoBehaviour {
     [SerializeField] private GameObject unlockButton;
     [SerializeField] private GameObject openButton;
     [SerializeField] private GameObject openNowButton;
+    [SerializeField] private GameObject queued;
 
     [SerializeField] private TextMeshProUGUI unlockingTimeText;
     [SerializeField] private TextMeshProUGUI unlockingGemsText;
@@ -56,6 +57,18 @@ public class ChestView : MonoBehaviour {
     public void Unlock() {
         openNowButton.SetActive(false);
         openButton.SetActive(true);
+    }
+
+    // Locked -> Queued
+    public void Queued() {
+        unlockButton.SetActive(false);
+        queued.SetActive(true);
+    }
+
+    // Queued -> Unlocking
+    public void Dequeued() {
+        queued.SetActive(false);
+        openNowButton.SetActive(true);
     }
 
 }

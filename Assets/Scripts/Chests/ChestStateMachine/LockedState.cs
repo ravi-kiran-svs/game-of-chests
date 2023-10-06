@@ -1,3 +1,5 @@
+using System;
+
 public class LockedState : ChestState {
 
     public LockedState(ChestController c, ChestModel m, ChestView v) : base(c, m, v) { }
@@ -12,9 +14,10 @@ public class LockedState : ChestState {
     }
 
     public void UnlockChest() {
-        bool showTimer = !ChestService.Instance.IsAnyTimerRunning();
-        bool showGems = CurrencyService.Instance.Gems >= model.gemsToUnlock;
-        ChestService.Instance.ShowUnlockChestDialog(model.timeToUnlock, model.gemsToUnlock, showTimer, showGems, this);
+        bool showTimerButton = !ChestService.Instance.IsAnyTimerRunning();
+        bool showGemsButton = CurrencyService.Instance.Gems >= model.gemsToUnlock;
+        bool showQueueButton = !ChestService.Instance.IsQueueFull();
+        ChestService.Instance.ShowUnlockChestDialog(model.timeToUnlock, model.gemsToUnlock, showTimerButton, showGemsButton, showQueueButton, this);
     }
 
     // to UNLOCKING state
@@ -30,4 +33,10 @@ public class LockedState : ChestState {
         view.UnlockDirect();
     }
 
+    // to QUEUED state
+    public void AddToQueue() {
+        ChestService.Instance.AddToQueue(controller);
+        controller.ChangeState(controller.queuedState);
+        view.Queued();
+    }
 }
