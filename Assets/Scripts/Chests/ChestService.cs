@@ -12,6 +12,9 @@ public class ChestService : MonoSingleton<ChestService> {
     [SerializeField] private UnlockChestDialog unlockChestDialog;
     [SerializeField] private OpenChestDialog openChestDialog;
 
+    private Queue<ChestController> queue = new Queue<ChestController>();
+    [SerializeField] private int maxQueueNum = 2;
+
     private List<ChestController> controllers = new List<ChestController>();
 
     public void GenerateChest() {
@@ -33,8 +36,8 @@ public class ChestService : MonoSingleton<ChestService> {
         }
     }
 
-    public void ShowUnlockChestDialog(int time, int gems, bool showTimer, bool showGems, LockedState chest) {
-        unlockChestDialog.Open(time, gems, showTimer, showGems, chest);
+    public void ShowUnlockChestDialog(int time, int gems, bool showTimer, bool showGems, bool showQueue, LockedState chest) {
+        unlockChestDialog.Open(time, gems, showTimer, showGems, showQueue, chest);
     }
 
     public void ShowOpenChestDialog(int gems, UnlockedState chest) {
@@ -48,6 +51,16 @@ public class ChestService : MonoSingleton<ChestService> {
             }
         }
         return false;
+    }
+
+    public bool IsQueueFull() {
+        return queue.Count >= maxQueueNum;
+    }
+
+    public void AddToQueue(ChestController chest) {
+        if (!IsQueueFull()) {
+            queue.Enqueue(chest);
+        }
     }
 
     private void OnChestClosed(ChestController chest) {

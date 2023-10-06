@@ -10,16 +10,28 @@ public class UnlockChestDialog : MonoBehaviour {
     [SerializeField] private TextMeshProUGUI gemsText;
     [SerializeField] private Button timerButton;
     [SerializeField] private Button gemsButton;
+    [SerializeField] private Button queueButton;
 
     LockedState currentChest;
 
-    public void Open(int time, int gems, bool showTimer, bool showGems, LockedState chest) {
+    public void Open(int time, int gems, bool showTimer, bool showGems, bool showQueue, LockedState chest) {
         currentChest = chest;
 
         timeText.text = time.ToString();
         gemsText.text = gems.ToString();
-        timerButton.interactable = showTimer;
         gemsButton.interactable = showGems;
+
+        if (showTimer) {
+            timerButton.gameObject.SetActive(true);
+            timerButton.interactable = true;
+            queueButton.gameObject.SetActive(false);
+
+        } else {
+            timerButton.gameObject.SetActive(false);
+            queueButton.gameObject.SetActive(true);
+
+            queueButton.interactable = showQueue;
+        }
 
         gameObject.SetActive(true);
     }
@@ -31,6 +43,11 @@ public class UnlockChestDialog : MonoBehaviour {
 
     public void OnUseGems() {
         currentChest.UseGems();
+        OnClose();
+    }
+
+    public void OnAddToQueue() {
+        currentChest.AddToQueue();
         OnClose();
     }
 

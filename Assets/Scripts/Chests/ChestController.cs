@@ -15,7 +15,7 @@ public class ChestController {
     private int coinReward;
     public int CoinReward { get { return coinReward; } }
 
-    public ChestState lockedState, unlockingState, unlockedState, collectedState;
+    public ChestState lockedState, unlockingState, unlockedState, collectedState, queuedState;
     private ChestState currentState;
     public ChestState CurrentState { get { return currentState; } }
 
@@ -31,6 +31,7 @@ public class ChestController {
         unlockingState = new UnlockingState(this, model, view);
         unlockedState = new UnlockedState(this, model, view);
         collectedState = new CollectedState(this, model, view);
+        queuedState = new QueuedState(this, model, view);
 
         ChangeState(lockedState);
     }
