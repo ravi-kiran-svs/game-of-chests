@@ -1,9 +1,13 @@
 public abstract class ChestState {
 
     protected ChestController controller;
+    protected ChestModel model;
+    protected ChestView view;
 
-    public ChestState(ChestController c) {
+    public ChestState(ChestController c, ChestModel m, ChestView v) {
         controller = c;
+        model = m;
+        view = v;
     }
 
     public abstract void OnEnter();

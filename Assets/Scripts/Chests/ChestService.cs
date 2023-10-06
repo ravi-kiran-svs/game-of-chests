@@ -26,6 +26,7 @@ public class ChestService : MonoSingleton<ChestService> {
             ChestModel chestModel = ChestModels[type];
             ChestController chest = new ChestController(chestModel, chestView);
             slot.AddChest(chest);
+            chestView.transform.SetParent(slot.transform, false);
 
             controllers.Add(chest);
             chest.OnCollected += OnChestClosed;

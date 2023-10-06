@@ -1,6 +1,6 @@
 public class LockedState : ChestState {
 
-    public LockedState(ChestController c) : base(c) { }
+    public LockedState(ChestController c, ChestModel m, ChestView v) : base(c, m, v) { }
 
     public override void OnEnter() {
     }
@@ -13,21 +13,21 @@ public class LockedState : ChestState {
 
     public void UnlockChest() {
         bool showTimer = !ChestService.Instance.IsAnyTimerRunning();
-        bool showGems = CurrencyService.Instance.Gems >= controller.Model.gemsToUnlock;
-        ChestService.Instance.ShowUnlockChestDialog(controller.Model.timeToUnlock, controller.Model.gemsToUnlock, showTimer, showGems, this);
+        bool showGems = CurrencyService.Instance.Gems >= model.gemsToUnlock;
+        ChestService.Instance.ShowUnlockChestDialog(model.timeToUnlock, model.gemsToUnlock, showTimer, showGems, this);
     }
 
     // to UNLOCKING state
     public void StartTimer() {
         controller.ChangeState(controller.unlockingState);
-        controller.View.Unlocking();
+        view.Unlocking();
     }
 
     // to UNLOCKED state
     public void UseGems() {
-        CurrencyService.Instance.MinusGems(controller.Model.gemsToUnlock);
+        CurrencyService.Instance.MinusGems(model.gemsToUnlock);
         controller.ChangeState(controller.unlockedState);
-        controller.View.UnlockDirect();
+        view.UnlockDirect();
     }
 
 }

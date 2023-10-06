@@ -9,7 +9,6 @@ public class Slot : MonoBehaviour {
 
     public void AddChest(ChestController chest) {
         chest.OnCollected += OnChestClosed;
-        chest.View.transform.SetParent(transform, false);
         isFree = false;
     }
 

@@ -8,9 +8,7 @@ public class ChestController {
     public event Action<ChestController> OnCollected;
 
     private ChestModel chestModel;
-    public ChestModel Model { get { return chestModel; } }
     private ChestView chestView;
-    public ChestView View { get { return chestView; } }
 
     private int gemsReward;
     public int GemsReward { get { return gemsReward; } }
@@ -29,10 +27,10 @@ public class ChestController {
         gemsReward = model.gemsRewardRange.Value;
         coinReward = model.coinRewardRange.Value;
 
-        lockedState = new LockedState(this);
-        unlockingState = new UnlockingState(this);
-        unlockedState = new UnlockedState(this);
-        collectedState = new CollectedState(this);
+        lockedState = new LockedState(this, model, view);
+        unlockingState = new UnlockingState(this, model, view);
+        unlockedState = new UnlockedState(this, model, view);
+        collectedState = new CollectedState(this, model, view);
 
         ChangeState(lockedState);
     }

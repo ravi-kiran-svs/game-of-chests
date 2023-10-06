@@ -1,6 +1,6 @@
 public class CollectedState : ChestState {
 
-    public CollectedState(ChestController c) : base(c) { }
+    public CollectedState(ChestController c, ChestModel m, ChestView v) : base(c, m, v) { }
 
     public override void OnEnter() {
         controller.CloseChest();

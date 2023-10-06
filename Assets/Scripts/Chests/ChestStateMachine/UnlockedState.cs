@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class UnlockedState : ChestState {
 
-    public UnlockedState(ChestController c) : base(c) { }
+    public UnlockedState(ChestController c, ChestModel m, ChestView v) : base(c, m, v) { }
 
     public override void OnEnter() {
     }

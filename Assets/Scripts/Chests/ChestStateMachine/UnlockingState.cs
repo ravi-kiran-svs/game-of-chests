@@ -7,12 +7,12 @@ public class UnlockingState : ChestState {
 
     private float tStart;
 
-    public UnlockingState(ChestController c) : base(c) {
+    public UnlockingState(ChestController c, ChestModel m, ChestView v) : base(c, m, v) {
         timerRun = StartTimer();
     }
 
     public override void OnEnter() {
-        controller.View.StartCoroutine(timerRun);
+        view.StartCoroutine(timerRun);
 
         tStart = Time.time;
     }
@@ -22,38 +22,38 @@ public class UnlockingState : ChestState {
 
     public override void Update() {
         float tPassed = Time.time - tStart;
-        float tLeft = controller.Model.timeToUnlock - tPassed;
+        float tLeft = model.timeToUnlock - tPassed;
         int tInt = (int)(tLeft + 0.5);
 
-        float gemsPerSec = (float)controller.Model.gemsToUnlock / controller.Model.timeToUnlock;
+        float gemsPerSec = (float)model.gemsToUnlock / model.timeToUnlock;
         float gemsToUnlock = tLeft * gemsPerSec;
         int gemsInt = (int)(gemsToUnlock + 1);
 
-        controller.View.UpdateUnlockingTexts(tInt, gemsInt, CurrencyService.Instance.Gems >= gemsInt);
+        view.UpdateUnlockingTexts(tInt, gemsInt, CurrencyService.Instance.Gems >= gemsInt);
     }
 
     public void OpenChestNow() {
-        controller.View.StopCoroutine(timerRun);
+        view.StopCoroutine(timerRun);
 
         float tPassed = Time.time - tStart;
-        float tLeft = controller.Model.timeToUnlock - tPassed;
-        float gemsPerSec = (float)controller.Model.gemsToUnlock / controller.Model.timeToUnlock;
+        float tLeft = model.timeToUnlock - tPassed;
+        float gemsPerSec = (float)model.gemsToUnlock / model.timeToUnlock;
         float gemsToUnlock = tLeft * gemsPerSec;
         int gemsInt = (int)(gemsToUnlock + 1);
         CurrencyService.Instance.MinusGems(gemsInt);
 
         controller.ChangeState(controller.unlockedState);
-        controller.View.Unlock();
+        view.Unlock();
     }
 
     public IEnumerator StartTimer() {
-        yield return new WaitForSeconds(controller.Model.timeToUnlock);
+        yield return new WaitForSeconds(model.timeToUnlock);
         OnTimerFinish();
     }
 
     public void OnTimerFinish() {
         controller.ChangeState(controller.unlockedState);
-        controller.View.Unlock();
+        view.Unlock();
     }
 
 }
