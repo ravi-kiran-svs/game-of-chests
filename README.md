@@ -9,3 +9,6 @@ A chest can be unlocked with either gems or by waiting for some time.<br>
 
 All the parameters can be modified from the editor - Scriptable Objects.<br>
 ![Screenshot 2023-10-05 180227](https://github.com/ravi-kiran-svs/game-of-chests/assets/41666334/d86d2c4d-a1df-48c3-ba56-c7165a4bdbd7)
+
+New: Chests can be queued one after another.<br>
+![Screenshot (36)](https://github.com/ravi-kiran-svs/game-of-chests/assets/41666334/1493e913-c9c5-41c0-81c0-3d4cad14c1d9)
