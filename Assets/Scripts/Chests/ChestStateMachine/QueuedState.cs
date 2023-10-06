@@ -11,4 +11,9 @@ public class QueuedState : ChestState {
     public override void Update() {
     }
 
+    // to UNLOCKING state
+    public void ForceUnlocking() {
+        controller.ChangeState(controller.unlockingState);
+        view.Dequeued();
+    }
 }

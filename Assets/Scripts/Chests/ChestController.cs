@@ -6,6 +6,8 @@ using UnityEngine;
 public class ChestController {
 
     public event Action<ChestController> OnCollected;
+    public event Action<ChestController, ChestState> OnEnterState;
+    public event Action<ChestController, ChestState> OnExitState;
 
     private ChestModel chestModel;
     private ChestView chestView;
@@ -43,9 +45,12 @@ public class ChestController {
     public void ChangeState(ChestState newState) {
         if (currentState != null) {
             currentState.OnExit();
+            OnExitState?.Invoke(this, currentState);
         }
+
         currentState = newState;
         currentState.OnEnter();
+        OnEnterState?.Invoke(this, currentState);
     }
 
     public void UnlockChest() {
