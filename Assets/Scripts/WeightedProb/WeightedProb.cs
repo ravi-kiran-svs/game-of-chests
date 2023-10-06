@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class WeightedProb {
 
-    public static int getWeightedProb(int[] weights) {
+    public static int GetWeightedProb(int[] weights) {
         int[] cummulativeWeights = new int[4];
         for (int i = 0, prevWeight = 0; i < weights.Length; i++) {
             cummulativeWeights[i] = prevWeight + weights[i];

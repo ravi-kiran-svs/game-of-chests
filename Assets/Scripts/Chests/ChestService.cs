@@ -21,7 +21,7 @@ public class ChestService : MonoSingleton<ChestService> {
             slotsFullDialog.SetActive(true);
 
         } else {
-            int type = WeightedProb.getWeightedProb(probWeights);
+            int type = WeightedProb.GetWeightedProb(probWeights);
             ChestView chestView = Instantiate(ChestPrefabs[type], transform);
             ChestModel chestModel = ChestModels[type];
             ChestController chest = new ChestController(chestModel, chestView);
